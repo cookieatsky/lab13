@@ -6,4 +6,8 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('home/', views.home, name='home'),
     path('logout/', views.logout_view, name='logout'),
+    path('create_appointment/', views.create_appointment, name='create_appointment'),  # Для создания записи
+    path('view_appointments/', views.view_appointments, name='view_appointments'),  # Для просмотра записей
+    path('delete_appointment/<int:appointment_id>/', views.delete_appointment, name='delete_appointment'),
+    # Для удаления записи
 ]

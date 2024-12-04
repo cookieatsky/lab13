@@ -1,14 +1,41 @@
 <!-- templates/services/home.html -->
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Главная страница</title>
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">  <!-- Подключаем CSS файл -->
 </head>
 <body>
+    <nav>
+        <a href="{% url 'create_appointment' %}">Создать запись</a>
+        <a href="{% url 'view_appointments' %}">Просмотреть записи</a>
+    </nav>
+
     <h1>Добро пожаловать на главную страницу!</h1>
     <p>Вы успешно вошли в систему.</p>
-    <a href="{% url 'logout' %}">Выход</a>  <!-- Если у вас есть выход -->
+
+    {% if user.is_authenticated %}
+        {# Проверка наличия профиля #}
+        {% if request.user.profile %}
+            {% if request.user.profile.role == 'admin' %}
+                <h2>Вы имеете права администратора!</h2>
+                <p>Вы можете управлять записями и выполнять дополнительные действия.</p>
+                {# Здесь вы можете добавить дополнительные ссылки или действия для администраторов #}
+            {% elif request.user.profile.role == 'user' %}
+                <h2>Вы имеете права пользователя!</h2>
+                <p>Вы можете создать новую запись или просмотреть свои записи.</p>
+            {% endif %}
+        {% else %}
+            <p>Профиль не найден. Пожалуйста, свяжитесь с администратором.</p>
+        {% endif %}
+    {% else %}
+        <p>Пожалуйста, <a href="{% url 'login' %}">войдите в систему</a>, чтобы получить доступ к функциям.</p>
+    {% endif %}
+
+    <a href="{% url 'logout' %}" class="logout-link">Выход</a>  <!-- Ссылка для выхода -->
 </body>
 </html>

@@ -1,10 +1,12 @@
+# spa_salon_services/forms.py
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from .models import Profile
 
-class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField()
+class UserRegistrationForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+    role = forms.ChoiceField(choices=Profile.ROLE_CHOICES)
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'email', 'password', 'role']  # Добавляем поле role

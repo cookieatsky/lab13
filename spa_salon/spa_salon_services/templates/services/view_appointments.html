@@ -1,0 +1,28 @@
+<!-- templates/services/view_appointments.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Записи</title>
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+</head>
+<body>
+    <h1>Ваши записи</h1>
+    <ul>
+        {% for appointment in appointments %}
+            <li>
+                {{ appointment.service_name }} - {{ appointment.appointment_date }}
+                <!-- Удаление записи может потребовать прав администратора -->
+                {% if request.user.is_superuser %}
+                   <a href="{% url 'delete_appointment' appointment.id %}">Удалить</a>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>У вас нет записей.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'create_appointment' %}">Создать новую запись</a>
+</body>
+</html>

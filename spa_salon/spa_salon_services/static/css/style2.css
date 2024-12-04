@@ -1,0 +1,49 @@
+/* static/css/styles.css */
+
+/* Основные стили для страницы */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Стили для навигационного меню */
+nav {
+    background-color: #4CAF50; /* Зеленый цвет фона */
+    padding: 15px; /* Отступы */
+    text-align: center; /* Выравнивание по центру */
+}
+nav a {
+    margin: 0 15px; /* Отступы между ссылками */
+    text-decoration: none; /* Убираем подчеркивание */
+    color: white; /* Цвет текста */
+    font-weight: bold; /* Устанавливаем жирный шрифт */
+    transition: background-color 0.3s; /* Плавный переход при наведении */
+}
+nav a:hover {
+    background-color: #45a049; /* Цвет фона при наведении */
+    padding: 10px; /* Отступы при наведении */
+    border-radius: 5px; /* Скругление углов */
+}
+
+/* Стили для основного контента */
+h1 {
+    text-align: center; /* Выравнивание заголовка по центру */
+    margin-top: 20px; /* Отступ сверху */
+}
+
+p {
+    text-align: center; /* Выравнивание текста по центру */
+    font-size: 18px; /* Размер шрифта */
+}
+
+/* Стили для ссылки выхода */
+.logout-link {
+    display: block; /* Отображаем блоком (новая строка) */
+    text-align: center; /* Центрируем */
+    margin-top: 20px; /* Отступ сверху */
+    color: #4CAF50; /* Цвет текста */
+    font-weight: bold; /* Жирный шрифт */
+}
