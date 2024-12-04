@@ -1,4 +1,3 @@
-<!-- templates/services/home.html -->
 {% load static %}
 
 <!DOCTYPE html>
@@ -13,6 +12,10 @@
     <nav>
         <a href="{% url 'create_appointment' %}">Создать запись</a>
         <a href="{% url 'view_appointments' %}">Просмотреть записи</a>
+        {% if request.user.is_authenticated and request.user.profile.role == 'admin' %}
+            <!-- Добавляем ссылку только для администраторов -->
+            <a href="{% url 'add_spa_service' %}">Создать новую услугу</a>
+        {% endif %}
     </nav>
 
     <h1>Добро пожаловать на главную страницу!</h1>

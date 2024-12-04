@@ -2,8 +2,10 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .forms import UserRegistrationForm
-#AppointmentForm
+from .forms import UserRegistrationForm, SpaServiceForm
+from .forms import AppointmentForm
+from .models import Profile
+
 
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Appointment, Profile
@@ -67,19 +69,23 @@ def logout_view(request):
     return redirect('login')  # Перенаправляем на страницу логина или на другую страницу, например, домой
 
 
+def is_admin(user):
+    return hasattr(user, 'profile') and user.profile.role == 'admin'
+
 @login_required
+@user_passes_test(is_admin)  # Ограничение доступа только для администраторов
 def create_appointment(request):
-    if request.method == "POST":
-        form = UserRegistrationForm(request.POST)
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
         if form.is_valid():
             appointment = form.save(commit=False)
-            appointment.user = request.user  # Установка текущего пользователя
+            appointment.price = form.cleaned_data['service'].price  # Устанавливаем цену из выбранной услуги
             appointment.save()
-            return redirect('home')  # Перенаправление после добавления
+            return redirect('view_appointments')  # Перенаправляем на страницу просмотра всех записей
     else:
-        form = UserRegistrationForm()
-    return render(request, 'services/create_appointment.html', {'form': form})
+        form = AppointmentForm()
 
+    return render(request, 'services/create_appointment.html', {'form': form})
 @login_required
 def view_appointments(request):
     appointments = Appointment.objects.filter(user=request.user)  # Записи текущего пользователя
@@ -91,3 +97,17 @@ def delete_appointment(request, appointment_id):
     appointment = get_object_or_404(Appointment, id=appointment_id)
     appointment.delete()
     return redirect('view_appointments')
+
+
+@login_required
+@user_passes_test(is_admin)
+def create_spa_service(request):
+    if request.method == 'POST':
+        form = SpaServiceForm(request.POST)
+        if form.is_valid():
+            form.save()  # Сохраняем новую услугу
+            return redirect('view_spa_services')  # Перенаправляем на страницу просмотра услуг
+    else:
+        form = SpaServiceForm()
+
+    return render(request, 'services/create_spa_service.html', {'form': form})

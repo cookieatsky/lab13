@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить новую услугу</title>
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+</head>
+<body>
+    <h1>Добавить новую услугу</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Отображает все поля формы -->
+        <button type="submit">Добавить услугу</button>
+    </form>
+    <a href="{% url 'view_spa_services' %}">Назад к услугам</a>
+</body>
+</html>

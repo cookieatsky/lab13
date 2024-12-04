@@ -1,5 +1,3 @@
-<!-- templates/services/create_appointment.html -->
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="ru">
@@ -13,7 +11,37 @@
     <h1>Создать новую запись</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+
+        <!-- Поле для выбора клиента -->
+        <div>
+            <label for="id_client">Клиент:</label>
+            {{ form.client }}  <!-- Отображаем выбор клиента -->
+        </div>
+
+        <!-- Поле для выбора услуги -->
+        <div>
+            <label for="id_service">Услуга:</label>
+            {{ form.service }}  <!-- Отображаем выбор услуги -->
+        </div>
+
+        <!-- Поле для указания персонала -->
+        <div>
+            <label for="id_staff_member">Персонал:</label>
+            <input type="text" name="staff_member" id="id_staff_member" required>
+        </div>
+
+        <!-- Поле для ввода даты посещения -->
+        <div>
+            <label for="id_appointment_date">Дата посещения:</label>
+            <input type="date" name="appointment_date" id="id_appointment_date" required>
+        </div>
+
+        <!-- Поле для ввода времени посещения -->
+        <div>
+            <label for="id_appointment_time">Время посещения:</label>
+            <input type="time" name="appointment_time" id="id_appointment_time" required>
+        </div>
+
         <button type="submit">Создать запись</button>
     </form>
     <a href="{% url 'view_appointments' %}">Назад к записям</a>
