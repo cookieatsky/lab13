@@ -28,9 +28,15 @@ def register(request):
             user.set_password(form.cleaned_data['password'])  # Устанавливаем пароль
             user.save()  # Сохраняем пользователя
 
-            # Проверка на существование профиля
-            if not hasattr(user, 'profile'):
+            if hasattr(user, 'profile'):
+                print("Нихуя не вошёл в условие")
+                profile = user.profile  # Получаем существующий профиль
+                profile.role = form.cleaned_data['role']  # Обновляем роль
+                profile.save()
+                # Проверка на существование профиля
+            else:
                 # Создаем профиль с ролью из формы
+                print("Вошёл в условие")
                 Profile.objects.create(user=user, role=form.cleaned_data['role'])  # Создаем профиль
 
             login(request, user)  # Автоматический вход после регистрации

@@ -5,7 +5,8 @@ from .models import Profile
 
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
-    role = forms.ChoiceField(choices=Profile.ROLE_CHOICES)
+    #role = forms.ChoiceField(choices=Profile.ROLE_CHOICES)
+    role = forms.ChoiceField(choices=Profile.ROLE_CHOICES, label='Роль')
 
     class Meta:
         model = User
