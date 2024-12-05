@@ -4,8 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .forms import UserRegistrationForm, SpaServiceForm
 from .forms import AppointmentForm
-from .models import Profile
-
+from .models import Profile, SpaService
 
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Appointment, Profile
@@ -88,10 +87,15 @@ def create_appointment(request):
     return render(request, 'services/create_appointment.html', {'form': form})
 @login_required
 def view_appointments(request):
-    appointments = Appointment.objects.filter(user=request.user)  # Записи текущего пользователя
-    return render(request, 'services/view_appointments.html', {'appointments': appointments})
+    if request.user.is_authenticated and request.user.profile.role == 'admin':
+        # Если пользователь администратор, показываем все записи
+        appointments = Appointment.objects.all()
+    else:
+        # Если пользователь не администратор, показываем только его записи
+        appointments = Appointment.objects.filter(client=request.user)
 
-@user_passes_test(lambda u: u.is_superuser)
+    return render(request, 'services/view_appointments.html', {'appointments': appointments})
+@user_passes_test(is_admin)
 @login_required
 def delete_appointment(request, appointment_id):
     appointment = get_object_or_404(Appointment, id=appointment_id)
@@ -111,3 +115,8 @@ def create_spa_service(request):
         form = SpaServiceForm()
 
     return render(request, 'services/create_spa_service.html', {'form': form})
+
+@login_required
+def view_spa_services(request):
+    services = SpaService.objects.all()  # Получаем список всех услуг
+    return render(request, 'services/view_spa_services.html', {'services': services})

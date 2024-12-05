@@ -10,4 +10,6 @@ urlpatterns = [
     path('view_appointments/', views.view_appointments, name='view_appointments'),  # Для просмотра записей
     path('delete_appointment/<int:appointment_id>/', views.delete_appointment, name='delete_appointment'),# Для удаления записи
     path('create_spa_service/', views.create_spa_service, name='add_spa_service'),
+    path('view-services/', views.view_spa_services, name='view_spa_services'),  # Маршрут для просмотра услуг
+
 ]

@@ -1,0 +1,47 @@
+/* Стиль для таблиц */
+table {
+    width: 100%;
+    border-collapse: collapse; /* Убираем двойные границы между ячейками */
+    margin: 20px 0; /* Отступы сверху и снизу таблицы */
+    font-size: 1em; /* Устанавливаем размер шрифта */
+}
+
+table thead {
+    background-color: #4CAF50; /* Цвет фона заголовка таблицы */
+    color: white; /* Цвет текста заголовка */
+}
+
+table th, table td {
+    border: 1px solid #ddd; /* Цвет границ ячеек */
+    padding: 8px; /* Отступ внутри ячеек */
+    text-align: left; /* Выравнивание текста в ячейках */
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2; /* Цвет фона для четных строк */
+}
+
+table tr:hover {
+    background-color: #d1e7dd; /* Цвет фона строки при наведении */
+}
+
+h1 {
+    color: #333; /* Цвет заголовка */
+}
+
+a {
+    color: #4CAF50; /* Цвет ссылок */
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+a:hover {
+    text-decoration: underline; /* Подчеркивание ссылки при наведении */
+}
+
+.alert {
+    color: red; /* Цвет текста для сообщений об ошибке */
+    margin: 10px 0; /* Отступы для сообщений */
+    padding: 10px;
+    border: 1px solid red;
+    background: #ffe6e6; /* Цвет фона для сообщений об ошибке */
+}

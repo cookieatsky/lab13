@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Просмотр услуг</title>
+    <link rel="stylesheet" href="{% static 'css/style_for_table.css' %}">
+</head>
+<body>
+    <h1>Список услуг</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Цена</th>
+                <th>Длительность</th>
+                <th>Тип</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for service in services %}
+            <tr>
+                <td>{{ service.name }}</td>
+                <td>{{ service.description }}</td>
+                <td>{{ service.price }}</td>
+                <td>{{ service.duration }} мин</td>
+                <td>{{ service.service_type }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">Нет доступных услуг.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'add_spa_service' %}">Добавить новую услугу</a>
+    <a href="{% url 'home' %}">На главную</a>
+</body>
+</html>

@@ -1,4 +1,3 @@
-<!-- templates/services/view_appointments.html -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="ru">
@@ -6,23 +5,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Записи</title>
-    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style_for_table.css' %}">
 </head>
 <body>
     <h1>Ваши записи</h1>
-    <ul>
-        {% for appointment in appointments %}
-            <li>
-                {{ appointment.service_name }} - {{ appointment.appointment_date }}
-                <!-- Удаление записи может потребовать прав администратора -->
-                {% if request.user.is_superuser %}
-                   <a href="{% url 'delete_appointment' appointment.id %}">Удалить</a>
-                {% endif %}
-            </li>
-        {% empty %}
-            <li>У вас нет записей.</li>
-        {% endfor %}
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Клиент</th>
+                <th>Услуга</th>
+                <th>Дата</th>
+                <th>Время</th>
+                <th>Цена</th>
+                <th>Мастер</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in appointments %}
+            <tr>
+                <td>{{ appointment.client.username }}</td>  <!-- Отображаем имя клиента -->
+                <td>{{ appointment.service.name }}</td>  <!-- Отображаем название услуги -->
+                <td>{{ appointment.appointment_date }}</td>  <!-- Отображаем дату записи -->
+                <td>{{ appointment.appointment_time }}</td>  <!-- Отображаем время записи -->
+                <td>{{ appointment.price }}</td>  <!-- Отображаем цену -->
+                <td>{{ appointment.staff_member }}</td>  <!-- Отображаем имя мастера -->
+                <td>
+                    {% if request.user.is_authenticated and request.user.profile.role == 'admin' %}
+                        <a href="{% url 'delete_appointment' appointment.id %}">Удалить</a>  <!-- Ссылка на удаление записи -->
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">У вас нет записей.</td>  <!-- Сообщение, если записей нет -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     <a href="{% url 'create_appointment' %}">Создать новую запись</a>
+    <a href="{% url 'home' %}">На главную</a>  <!-- Ссылка на главную страницу -->
 </body>
 </html>

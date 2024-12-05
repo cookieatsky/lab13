@@ -21,7 +21,7 @@ class AppointmentForm(forms.ModelForm):
             'staff_member',
             'appointment_date',
             'appointment_time',
-            'price',
+            #'price',
         ]
 
 class UserRegistrationForm(forms.ModelForm):
