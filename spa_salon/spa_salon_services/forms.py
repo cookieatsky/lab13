@@ -1,7 +1,8 @@
 # spa_salon_services/forms.py
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile, Appointment, SpaService
+from .models import Profile, Appointment, SpaService, News
+
 
 class AppointmentForm(forms.ModelForm):
     appointment_date = forms.DateField(
@@ -36,3 +37,8 @@ class SpaServiceForm(forms.ModelForm):
     class Meta:
         model = SpaService
         fields = ['name', 'description', 'price', 'duration', 'service_type']
+
+class NewsForm(forms.ModelForm):
+    class Meta:
+        model = News
+        fields = ['title', 'content', 'image']  # Добавляем поле для изображения

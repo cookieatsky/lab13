@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Добавить новую услугу</title>
-
-    <link rel="stylesheet" href="{% static 'css/style_for_create.css' %}">
-
+    <nav>
+            <a href="{% url 'news' %}">Назад к новостям</a>
+    </nav>
+    <title>Создать новость</title>
+        <link rel="stylesheet" href="{% static 'css/style_for_create.css' %}">
 </head>
 <body style="
     background-image: url('https://bogatyr.club/uploads/posts/2023-02/1675476878_bogatyr-club-p-pioni-svetlie-fon-vkontakte-1.jpg');
@@ -17,14 +18,11 @@
     margin: 0; /* Убирает отступы по умолчанию */
     height: 100vh; /* Заставляет тело занимать всю высоту экрана */
 ">
-<nav>
-    <a href="{% url 'view_spa_services' %}">Назад к услугам</a>
-</nav>
-    <h1>Добавить новую услугу</h1>
-    <form method="post">
+    <h1>Создать новую новость</h1>
+    <form method="post" enctype="multipart/form-data">  <!-- Не забудьте enctype для загрузки файлов -->
         {% csrf_token %}
-        {{ form.as_p }}  <!-- Отображает все поля формы -->
-        <button type="submit">Добавить услугу</button>
+        {{ form.as_p }}
+        <button type="submit">Создать новость</button>
     </form>
 
 </body>

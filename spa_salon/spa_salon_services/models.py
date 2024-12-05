@@ -40,3 +40,12 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.role}"
+
+
+class News(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)  # Дата и время создания записи
+    image = models.ImageField(upload_to='news_images/')  # Поле для загрузки изображения
+    def __str__(self):
+        return self.title

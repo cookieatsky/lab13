@@ -6,8 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Просмотр услуг</title>
     <link rel="stylesheet" href="{% static 'css/style_for_table.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
 </head>
-<body>
+<body style="
+    background-image: url('https://bogatyr.club/uploads/posts/2023-02/1675476878_bogatyr-club-p-pioni-svetlie-fon-vkontakte-1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0; /* Убирает отступы по умолчанию */
+    height: 100vh; /* Заставляет тело занимать всю высоту экрана */
+">
+<nav>
+        <a href="{% url 'home' %}">На главную</a>
+    {% if request.user.is_authenticated and request.user.profile.role == 'admin' %}
+            <!-- Добавляем ссылку только для администраторов -->
+              <a href="{% url 'add_spa_service' %}">Добавить новую услугу</a>
+        {% endif %}
+
+</nav>
     <h1>Список услуг</h1>
     <table>
         <thead>
@@ -17,6 +33,7 @@
                 <th>Цена</th>
                 <th>Длительность</th>
                 <th>Тип</th>
+                <th>Действие</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +44,11 @@
                 <td>{{ service.price }}</td>
                 <td>{{ service.duration }} мин</td>
                 <td>{{ service.service_type }}</td>
+                <td>
+                    {% if request.user.is_authenticated and request.user.profile.role == 'admin' %}
+                        <a href="{% url 'delete_spa_service' service.id %}">Удалить</a>  <!-- Ссылка на удаление записи -->
+                    {% endif %}
+                </td>
             </tr>
             {% empty %}
             <tr>
@@ -35,7 +57,6 @@
             {% endfor %}
         </tbody>
     </table>
-    <a href="{% url 'add_spa_service' %}">Добавить новую услугу</a>
-    <a href="{% url 'home' %}">На главную</a>
+
 </body>
 </html>

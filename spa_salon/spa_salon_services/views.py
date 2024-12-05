@@ -2,9 +2,9 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .forms import UserRegistrationForm, SpaServiceForm
+from .forms import UserRegistrationForm, SpaServiceForm, NewsForm
 from .forms import AppointmentForm
-from .models import Profile, SpaService
+from .models import Profile, SpaService, News
 
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Appointment, Profile
@@ -102,7 +102,6 @@ def delete_appointment(request, appointment_id):
     appointment.delete()
     return redirect('view_appointments')
 
-
 @login_required
 @user_passes_test(is_admin)
 def create_spa_service(request):
@@ -116,7 +115,37 @@ def create_spa_service(request):
 
     return render(request, 'services/create_spa_service.html', {'form': form})
 
+@user_passes_test(is_admin)
+@login_required
+def delete_spa_service(request, spa_service_id):
+    spa_service = get_object_or_404(SpaService, id=spa_service_id)  # Получение услуги по ID
+    spa_service.delete()  # Удаляем услугу
+    return redirect('view_spa_services')  # Перенаправляем на страницу просмотра услуг
+
 @login_required
 def view_spa_services(request):
     services = SpaService.objects.all()  # Получаем список всех услуг
     return render(request, 'services/view_spa_services.html', {'services': services})
+
+@login_required
+def view_news(request):
+    news_items = News.objects.all().order_by('-created_at')  # Получаем все новости и сортируем по дате
+    return render(request, 'services/view_news.html', {'news_items': news_items})
+
+@login_required
+def create_news(request):
+    if request.method == 'POST':
+        form = NewsForm(request.POST, request.FILES)  # Не забудьте указать request.FILES
+        if form.is_valid():
+            form.save()
+            return redirect('news')  # Перенаправляем на страницу новостей
+    else:
+        form = NewsForm()
+    return render(request, 'services/create_news.html', {'form': form})
+
+@login_required
+@user_passes_test(lambda u: u.profile.role == 'admin')  # Проверяем, что пользователь - администратор
+def delete_news(request, news_id):
+    news_item = get_object_or_404(News, id=news_id)  # Получаем объект новости или 404, если не найден
+    news_item.delete()  # Удаляем новость
+    return redirect('news')  # Перенаправляем обратно на страницу новостей

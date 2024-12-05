@@ -7,8 +7,14 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">  <!-- Путь к вашим CSS -->
 </head>
-<body>
-    <div class="container">
+<body style="
+    background-image: url('https://bogatyr.club/uploads/posts/2023-02/1675476878_bogatyr-club-p-pioni-svetlie-fon-vkontakte-1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0; /* Убирает отступы по умолчанию */
+    height: 100vh; /* Заставляет тело занимать всю высоту экрана */
+"><div class="container">
         <h2>Регистрация</h2>
         {% if messages %}
             {% for message in messages %}
@@ -17,8 +23,18 @@
         {% endif %}
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Зарегистрироваться</button>
+            {{ form.as_table }}
+            <button type="submit"
+                    style="background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin: 10px 0px;
+    transition: background-color 0.3s ease;
+" onmouseover="this.style.backgroundColor='#45a049'" onmouseout="this.style.backgroundColor='#4CAF50'">Зарегистрироваться</button>
         </form>
         <p>Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
     </div>

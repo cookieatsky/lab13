@@ -8,3 +8,4 @@ urlpatterns = [
     path('', include('spa_salon_services.urls')),  # Импортируем URL-адреса приложения
 
 ]
+

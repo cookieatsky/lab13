@@ -8,15 +8,26 @@
     <title>Главная страница</title>
     <link rel="stylesheet" href="{% static 'css/style2.css' %}">  <!-- Подключаем CSS файл -->
 </head>
-<body>
-    <nav>
-        <a href="{% url 'create_appointment' %}">Создать запись</a>
+<body style="
+    background-image: url('https://bogatyr.club/uploads/posts/2023-02/1675476878_bogatyr-club-p-pioni-svetlie-fon-vkontakte-1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0; /* Убирает отступы по умолчанию */
+    height: 100vh; /* Заставляет тело занимать всю высоту экрана */
+"><nav>
+        <a href="{% url 'news' %}">Новости салона</a>
+         {% if request.user.is_authenticated and request.user.profile.role == 'admin' %}
+            <!-- Добавляем ссылку только для администраторов -->
+            <a href="{% url 'create_appointment' %}">Создать запись</a>
+        {% endif %}
         <a href="{% url 'view_appointments' %}">Просмотреть записи</a>
         {% if request.user.is_authenticated and request.user.profile.role == 'admin' %}
             <!-- Добавляем ссылку только для администраторов -->
             <a href="{% url 'add_spa_service' %}">Создать новую услугу</a>
         {% endif %}
         <a href="{% url 'view_spa_services' %}">Просмотреть возможные услуги</a>
+
     </nav>
 
     <h1>Добро пожаловать на главную страницу!</h1>
@@ -26,11 +37,11 @@
         {# Проверка наличия профиля #}
         {% if request.user.profile %}
             {% if request.user.profile.role == 'admin' %}
-                <h2>Вы имеете права администратора!</h2>
+                <h2 align="center">Вы имеете права администратора!</h2>
                 <p>Вы можете управлять записями и выполнять дополнительные действия.</p>
                 {# Здесь вы можете добавить дополнительные ссылки или действия для администраторов #}
             {% elif request.user.profile.role == 'user' %}
-                <h2>Вы имеете права пользователя!</h2>
+                <h2 align="center">Вы имеете права пользователя!</h2>
                 <p>Вы можете создать новую запись или просмотреть свои записи.</p>
             {% endif %}
         {% else %}
@@ -39,7 +50,8 @@
     {% else %}
         <p>Пожалуйста, <a href="{% url 'login' %}">войдите в систему</a>, чтобы получить доступ к функциям.</p>
     {% endif %}
+        <a href="{% url 'logout' %}" class="logout-link">Выход</a>  <!-- Ссылка для выхода -->
 
-    <a href="{% url 'logout' %}" class="logout-link">Выход</a>  <!-- Ссылка для выхода -->
+
 </body>
 </html>

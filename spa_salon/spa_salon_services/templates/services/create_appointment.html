@@ -5,9 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Создать запись</title>
-    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style_for_create.css' %}">
+
 </head>
-<body>
+<body style="
+    background-image: url('https://bogatyr.club/uploads/posts/2023-02/1675476878_bogatyr-club-p-pioni-svetlie-fon-vkontakte-1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0; /* Убирает отступы по умолчанию */
+    height: 100vh; /* Заставляет тело занимать всю высоту экрана */
+">
+<nav>
+        <a href="{% url 'view_appointments' %}">Назад к записям</a>
+</nav>
     <h1>Создать новую запись</h1>
     <form method="post">
         {% csrf_token %}
@@ -44,6 +55,6 @@
 
         <button type="submit">Создать запись</button>
     </form>
-    <a href="{% url 'view_appointments' %}">Назад к записям</a>
+
 </body>
 </html>

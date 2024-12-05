@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новости салона</title>
+    <link rel="stylesheet" href="{% static 'css/style_for_news.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+</head>
+<body style="
+    background-image: url('https://bogatyr.club/uploads/posts/2023-02/1675476878_bogatyr-club-p-pioni-svetlie-fon-vkontakte-1.jpg');
+    background-size: auto 100%; /* Растягивает изображение по высоте, а ширина остается естественной */
+    background-position: center; /* Центрует изображение по горизонтали */
+    background-repeat: repeat-y; /* Позволяет изображению повторяться по вертикали */
+    margin: 0; /* Убирает отступы по умолчанию */
+">
+    <nav> <a>Новости салона</a>
+            {% if request.user.is_authenticated and request.user.profile.role == 'admin' %}
+        <!-- Добавляем ссылку только для администраторов -->
+        <a href="{% url 'create_news' %}">Создать новость</a>
+    {% endif %}
+        <a href="{% url 'home' %}">На главную</a> </nav>
+
+    <div class="news-container">
+        {% for news in news_items %}
+        <div class="news-item">
+            <div class="news-image">
+                <img src="{{ news.image.url }}" alt="News Image">  <!-- Отображаем изображение новости -->
+            </div>
+            <div class="news-content">
+                <h2>{{ news.title }}</h2>
+                <p>{{ news.content }}</p>
+                <p><em>{{ news.created_at|date:"d M Y" }}</em></p>
+                {% if request.user.is_authenticated and request.user.profile.role == 'admin' %}
+                    <!-- Ссылка на удаление новости с подтверждением -->
+                    <a href="{% url 'delete_news' news.id %}" onclick="return confirm('Вы уверены, что хотите удалить эту новость?');">Удалить</a>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <p>Нет новостей.</p>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
