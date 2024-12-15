@@ -1,0 +1,113 @@
+/* Основные стили для страницы */
+body {
+    font-family: Arial, sans-serif; /* Используем тот же шрифт */
+    background-color: #f9f9f9; /* Светлый фон */
+    margin: 0; /* Убираем отступы */
+    padding: 0; /* Убираем отступы */
+    color: #333; /* Темно-серый текст */
+}
+
+/* Стили для навигационного меню */
+nav {
+    background-color: #4CAF50; /* Зеленый цвет фона */
+    padding: 15px; /* Отступы */
+    text-align: center; /* Выравнивание по центру */
+}
+nav a {
+    margin: 0 15px; /* Отступы между ссылками */
+    text-decoration: none; /* Убираем подчеркивание */
+    color: white; /* Цвет текста */
+    font-weight: bold; /* Устанавливаем жирный шрифт */
+    transition: background-color 0.3s; /* Плавный переход при наведении */
+}
+nav a:hover {
+    background-color: #45a049; /* Цвет фона при наведении */
+    padding: 10px; /* Отступы при наведении */
+    border-radius: 5px; /* Скругление углов */
+}
+
+/* Заголовки */
+h1 {
+    text-align: center; /* Выравнивание заголовка по центру */
+    margin-top: 20px; /* Отступ сверху */
+    color: #4CAF50; /* Зеленый цвет текста */
+}
+
+/* Формы */
+form {
+    background: #fff; /* Белый фон для формы */
+    padding: 30px; /* Внутренние отступы */
+    border-radius: 8px; /* Закругленные углы */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Нежная тень */
+    max-width: 500px; /* Максимальная ширина формы */
+    margin: 20px auto; /* Центрируем форму */
+}
+
+div {
+    margin-bottom: 15px; /* Отступ между элементами формы */
+}
+
+/* Ярлыки для полей */
+label {
+    font-weight: bold; /* Жирный шрифт для меток */
+    margin-bottom: 5px; /* Отступ снизу меток */
+    display: block; /* Блочный элемент */
+}
+
+/* Поля ввода */
+input[type="text"],
+input[type="date"],
+input[type="time"],
+select {
+    width: 100%; /* Полная ширина для полей */
+    padding: 12px; /* Внутренние отступы */
+    border: 1px solid #ccc; /* Цвет границы */
+    border-radius: 5px; /* Закругленные углы */
+    transition: border-color 0.3s ease; /* Плавный переход цвета границы */
+}
+
+/* Стили для фокуса на полях ввода */
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+select:focus {
+    border-color: #4CAF50; /* Цвет границы при фокусе */
+    outline: none; /* Убираем обводку */
+}
+
+/* Кнопки */
+button {
+    background-color: #4CAF50; /* Цвет фона кнопки */
+    color: white; /* Цвет текста кнопки */
+    border: none; /* Убираем границу */
+    padding: 12px 20px; /* Внутренние отступы */
+    border-radius: 5px; /* Закругленные углы */
+    cursor: pointer; /* Указатель для курсора */
+    font-size: 1em; /* Размер шрифта кнопки */
+    transition: background-color 0.3s ease; /* Плавный переход фона */
+}
+
+/* Изменение цвета кнопки при наведении */
+button:hover {
+    background-color: #357ABD; /* Темный оттенок цвета при наведении */
+}
+
+/* Ссылки */
+a {
+    color: #4CAF50; /* Цвет ссылок */
+    text-decoration: none; /* Убираем подчеркивание */
+    font-weight: bold; /* Жирный шрифт для ссылок */
+}
+
+a:hover {
+    text-decoration: underline; /* Подчеркивание при наведении */
+}
+
+/* Стили для ссылки выхода */
+.logout-link {
+    display: block; /* Отображаем блоком (новая строка) */
+    text-align: center; /* Центрируем */
+    margin-top: 20px; /* Отступ сверху */
+    color: #4CAF50; /* Цвет текста */
+    font-weight: bold; /* Жирный шрифт */
+}

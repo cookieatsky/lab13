@@ -6,10 +6,20 @@ from .forms import UserRegistrationForm, SpaServiceForm, NewsForm
 from .forms import AppointmentForm
 from .models import Profile, SpaService, News
 
+from .serializers import NewsSerializer
+from rest_framework import viewsets
+
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Appointment, Profile
 
 from django.contrib.auth.decorators import login_required, user_passes_test
+
+#для статистики
+from django.views.generic import TemplateView
+from django.db.models import Count
+from datetime import datetime, timedelta
+import json
+
 
 
 def register(request):
@@ -149,3 +159,44 @@ def delete_news(request, news_id):
     news_item = get_object_or_404(News, id=news_id)  # Получаем объект новости или 404, если не найден
     news_item.delete()  # Удаляем новость
     return redirect('news')  # Перенаправляем обратно на страницу новостей
+
+
+
+
+class NewsViewSet(viewsets.ModelViewSet):
+    queryset = News.objects.all()  # Предоставляем все новости
+    serializer_class = NewsSerializer  # Указываем сериализатор
+
+#для статистики
+class StatisticsView(TemplateView):
+    template_name = 'services/statistics.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            end_date = datetime.now()
+            start_date = end_date - timedelta(days=30)
+
+            daily_appointments = (
+                Appointment.objects.filter(appointment_date__range=[start_date, end_date])
+                .values('appointment_date')
+                .annotate(count=Count('id'))
+                .order_by('appointment_date')
+            )
+
+            context['daily_appointments'] = json.dumps(list(daily_appointments), default=str)
+
+            services_statistics = (
+                Appointment.objects.select_related('service')
+                .values('service__name')
+                .annotate(count=Count('id'))
+                .order_by('-count')
+            )
+
+            context['services_statistics'] = json.dumps(list(services_statistics), default=str)
+
+        except Exception as e:
+            print(f"Error: {e}")  # Выводим ошибку в консоль сервера
+            context['error_message'] = str(e)  # Если есть ошибка, добавляем сообщение в контекст
+
+        return context

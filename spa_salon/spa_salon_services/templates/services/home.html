@@ -28,6 +28,10 @@
         {% endif %}
         <a href="{% url 'view_spa_services' %}">Просмотреть возможные услуги</a>
 
+    {% if request.user.is_authenticated and request.user.profile.role == 'admin' %}
+    <a href="{% url 'statistics_page' %}">Страница статистики</a>
+{% endif %}
+
     </nav>
 
     <h1>Добро пожаловать на главную страницу!</h1>

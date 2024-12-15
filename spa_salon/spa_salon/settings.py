@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'spa_salon_services',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

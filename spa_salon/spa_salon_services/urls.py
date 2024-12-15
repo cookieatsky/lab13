@@ -1,7 +1,18 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+
+
+
+from rest_framework.routers import DefaultRouter
+from .views import NewsViewSet
+from .views import StatisticsView
+
+router = DefaultRouter()
+router.register(r'news', NewsViewSet, basename='news')  # Регистрируем ваш NewsViewSet
+
+
 
 urlpatterns = [
     path('register/', views.register, name='register'),
@@ -20,6 +31,11 @@ urlpatterns = [
     path('news/', views.view_news, name='news'),  # Маршрут для страницы новостей
     path('create-news/', views.create_news, name='create_news'),
     path('delete-news/<int:news_id>/', views.delete_news, name='delete_news'),
+
+    path('api/', include(router.urls)),  # Включаем маршруты API
+
+    path ('statistics/', StatisticsView.as_view(), name='statistics_page' )
+
 ]
 
 #if settings.DEBUG:
