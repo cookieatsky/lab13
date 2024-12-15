@@ -5,18 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Страница статистики</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style_for_statistics.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style_for_statistics.css' %}"> <!-- Подключение CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
+<body style="
+    background-image: url('https://bogatyr.club/uploads/posts/2023-02/1675476878_bogatyr-club-p-pioni-svetlie-fon-vkontakte-1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat;
+    margin: 0; /* Убирает отступы по умолчанию */
+    height: 100vh; /* Заставляет тело занимать всю высоту экрана */
+">
+
+
+
     <div class="container">
-        <h1 class="mt-5">Статистика по услугам и записям</h1>
+
+        <nav>
+            <a>Статистика по услугам и записям</a>
+            <a href="{% url 'home' %}" class="btn btn-primary mt-4">Вернуться на главную страницу</a></nav>
+
 
         <div class="mt-4">
             <h3>Количество записей по дням (за последние 30 дней)</h3>
             {% if daily_appointments %}
-                <canvas id="dailyAppointmentsChart"></canvas>
+                <div class="chart-container"> <!-- Обертка для графика -->
+                    <canvas id="dailyAppointmentsChart"></canvas>
+                </div>
             {% else %}
                 <p>Нет данных для отображения по дням.</p>
             {% endif %}
@@ -25,13 +41,15 @@
         <div class="mt-5">
             <h3>Статистика по услугам</h3>
             {% if services_statistics %}
-                <canvas id="servicesStatisticsChart"></canvas>
+                <div class="chart-container"> <!-- Обертка для графика -->
+                    <canvas id="servicesStatisticsChart"></canvas>
+                </div>
             {% else %}
                 <p>Нет данных для отображения по услугам.</p>
             {% endif %}
         </div>
 
-        <a href="{% url 'home' %}" class="btn btn-primary mt-4">Вернуться на главную страницу</a>
+
     </div>
 
     <script>
