@@ -74,7 +74,7 @@
             options: { scales: { y: { beginAtZero: true } } }
         });
 
-        // Настройка данных для графика статистики по услугам
+        // Настройка данных для графика статистики по услугам коммент
         const servicesData = JSON.parse('{{ services_statistics|escapejs }}');
         const servicesLabels = servicesData.map(item => item.service__name);
         const servicesCounts = servicesData.map(item => item.count);
